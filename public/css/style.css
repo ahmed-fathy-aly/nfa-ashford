@@ -40,19 +40,24 @@ body::before {
     padding: 0;
 }
 
-/* Header and Navigation - Mobile First */
+/* Header and Navigation - Illustrated Skyline Style */
 .header {
-    background-image: linear-gradient(rgba(102, 126, 234, 0.85), rgba(118, 75, 162, 0.85)), url('https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 100;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    height: 192px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
     transition: transform 0.3s ease-in-out;
 }
 
@@ -65,52 +70,74 @@ body::before {
 }
 
 body {
-    padding-top: 100px;
+    padding-top: 192px;
 }
 
 .nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 1rem;
-    height: 100px;
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    width: 100%;
 }
 
 .nav-logo {
     color: white;
     text-decoration: none;
-    font-size: 1.5rem;
+    font-size: 2.25rem;
     font-weight: 800;
-    letter-spacing: -0.02em;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: -0.025em;
+    display: block;
+    margin-bottom: 1rem;
 }
 
 .nav-menu {
     display: flex;
+    align-items: center;
+    justify-content: center;
     list-style: none;
-    gap: 0.5rem;
+    gap: 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    flex-wrap: wrap;
 }
 
 .nav-link {
-    color: rgba(255, 255, 255, 0.9);
+    color: white;
     text-decoration: none;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    position: relative;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
 }
 
 .nav-link.active {
-    background-color: rgba(255, 255, 255, 0.25);
-    color: white;
+    font-weight: 600;
 }
 
 .nav-link:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    color: white;
+    color: #d1d5db;
+}
+
+/* Skyline SVG */
+.header-skyline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 6rem;
+    color: rgba(0, 0, 0, 0.15);
+    opacity: 0.8;
+}
+
+.header-skyline svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Responsive adjustments */
+@media (min-width: 640px) {
+    .nav-menu {
+        gap: 1.5rem;
+        font-size: 1rem;
+    }
 }
 
 /* Typography */
@@ -125,11 +152,11 @@ body {
 
 /* Eurostar Countdown */
 .eurostar-countdown {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
     border-radius: 20px;
     padding: 2rem 1.5rem;
     margin-bottom: 3rem;
-    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 8px 32px rgba(75, 85, 99, 0.3);
     color: white;
 }
 

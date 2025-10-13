@@ -28,6 +28,28 @@
 
     <main class="main-content">
         <div class="container">
+            <!-- Eurostar Countdown -->
+            <div class="eurostar-countdown">
+                <div class="countdown-header">
+                    <h2 class="countdown-title">Last Eurostar from Ashford International</h2>
+                    <p class="countdown-subtitle">Final service departed: March 18, 2020</p>
+                </div>
+                <div class="countdown-display">
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="years">0</span>
+                        <span class="countdown-label">Years</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="months">0</span>
+                        <span class="countdown-label">Months</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="days">0</span>
+                        <span class="countdown-label">Days</span>
+                    </div>
+                </div>
+            </div>
+
             <h1 class="page-title">Latest Articles</h1>
             
             <div class="articles-grid">
@@ -88,6 +110,37 @@
             
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         }, false);
+
+        // Eurostar Countdown
+        function updateCountdown() {
+            const lastEurostar = new Date('2020-03-18T16:00:00'); // Afternoon of March 18, 2020
+            const now = new Date();
+            
+            let years = now.getFullYear() - lastEurostar.getFullYear();
+            let months = now.getMonth() - lastEurostar.getMonth();
+            let days = now.getDate() - lastEurostar.getDate();
+            
+            // Adjust for negative days
+            if (days < 0) {
+                months--;
+                const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                days += lastMonth.getDate();
+            }
+            
+            // Adjust for negative months
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            
+            document.getElementById('years').textContent = years;
+            document.getElementById('months').textContent = months;
+            document.getElementById('days').textContent = days;
+        }
+        
+        // Update countdown immediately and every hour
+        updateCountdown();
+        setInterval(updateCountdown, 3600000); // Update every hour
     </script>
 </body>
 </html>

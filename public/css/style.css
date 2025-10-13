@@ -115,12 +115,76 @@ body {
 
 /* Typography */
 .page-title {
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    color: #1a1a1a;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: #666;
     text-align: center;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+/* Eurostar Countdown */
+.eurostar-countdown {
+    background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    margin-bottom: 3rem;
+    box-shadow: 0 8px 32px rgba(255, 107, 53, 0.3);
+    color: white;
+}
+
+.countdown-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.countdown-title {
+    font-size: 1.5rem;
     font-weight: 800;
+    margin-bottom: 0.5rem;
     letter-spacing: -0.02em;
+    line-height: 1.3;
+}
+
+.countdown-subtitle {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+.countdown-display {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1rem;
+}
+
+.countdown-item {
+    flex: 1;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1.25rem 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.countdown-value {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.countdown-label {
+    display: block;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    opacity: 0.9;
 }
 
 /* Article Cards - Mobile First */
@@ -386,6 +450,39 @@ body {
         padding: 0.75rem 1.25rem;
         font-size: 1rem;
     }
+
+    /* Eurostar Countdown - Tablet */
+    .eurostar-countdown {
+        padding: 2.5rem 2rem;
+    }
+
+    .countdown-title {
+        font-size: 2rem;
+    }
+
+    .countdown-subtitle {
+        font-size: 1rem;
+    }
+
+    .countdown-display {
+        gap: 1.5rem;
+    }
+
+    .countdown-item {
+        padding: 1.5rem 1rem;
+    }
+
+    .countdown-value {
+        font-size: 3rem;
+    }
+
+    .countdown-label {
+        font-size: 1rem;
+    }
+
+    .page-title {
+        font-size: 1.75rem;
+    }
     
     .articles-grid {
         display: grid;
@@ -404,10 +501,6 @@ body {
     .article-title-full {
         font-size: 2.8rem;
     }
-    
-    .page-title {
-        font-size: 3rem;
-    }
 }
 
 /* Desktop Styles */
@@ -422,6 +515,33 @@ body {
     
     .nav-logo {
         font-size: 1.75rem;
+    }
+
+    /* Eurostar Countdown - Desktop */
+    .eurostar-countdown {
+        padding: 3rem 3rem;
+    }
+
+    .countdown-title {
+        font-size: 2.25rem;
+    }
+
+    .countdown-display {
+        gap: 2rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .countdown-item {
+        padding: 2rem 1.5rem;
+    }
+
+    .countdown-value {
+        font-size: 3.5rem;
+    }
+
+    .page-title {
+        font-size: 2rem;
     }
     
     .articles-grid {
@@ -443,10 +563,6 @@ body {
     
     .article-title-full {
         font-size: 3.2rem;
-    }
-    
-    .page-title {
-        font-size: 3.5rem;
     }
     
     .article-full {

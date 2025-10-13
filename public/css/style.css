@@ -42,7 +42,7 @@ body::before {
 
 /* Header and Navigation - Mobile First */
 .header {
-    background-image: linear-gradient(rgba(255, 107, 53, 0.85), rgba(247, 147, 30, 0.85)), url('https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+    background-image: linear-gradient(rgba(102, 126, 234, 0.85), rgba(118, 75, 162, 0.85)), url('https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -125,11 +125,11 @@ body {
 
 /* Eurostar Countdown */
 .eurostar-countdown {
-    background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 20px;
     padding: 2rem 1.5rem;
     margin-bottom: 3rem;
-    box-shadow: 0 8px 32px rgba(255, 107, 53, 0.3);
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
     color: white;
 }
 
@@ -240,7 +240,7 @@ body {
 }
 
 .tag {
-    background: rgba(255, 107, 53, 0.95);
+    background: rgba(102, 126, 234, 0.95);
     backdrop-filter: blur(10px);
     color: white;
     padding: 6px 12px;

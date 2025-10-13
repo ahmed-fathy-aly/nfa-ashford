@@ -1,0 +1,105 @@
+<div class="container">
+    <!-- Eurostar Countdown -->
+    <div class="eurostar-countdown">
+        <div class="countdown-header">
+            <h2 class="countdown-title">Last Eurostar from Ashford International</h2>
+            <p class="countdown-subtitle">Final service departed: March 18, 2020</p>
+        </div>
+        <div class="countdown-display">
+            <div class="countdown-item">
+                <span class="countdown-value" id="years">0</span>
+                <span class="countdown-label">Years</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-value" id="months">0</span>
+                <span class="countdown-label">Months</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-value" id="days">0</span>
+                <span class="countdown-label">Days</span>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="page-title">Latest Articles</h2>
+    <div class="articles-grid">
+        <% articles.forEach(article => { %>
+            <article class="article-card">
+                <a href="/article/<%= article.id %>" class="article-link">
+                    <div class="article-image">
+                        <img src="<%= article.image %>" alt="<%= article.title %>">
+                        <div class="article-tags">
+                            <% article.tags.forEach(tag => { %>
+                                <span class="tag"><%= tag %></span>
+                            <% }); %>
+                        </div>
+                    </div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <time class="article-date"><%= new Date(article.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) %></time>
+                        </div>
+                        <h3 class="article-title"><%= article.title %></h3>
+                        <p class="article-excerpt"><%= article.excerpt %></p>
+                        <span class="read-more">
+                            Read more
+                            <svg class="read-more-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </div>
+                </a>
+            </article>
+        <% }); %>
+    </div>
+</div>
+
+<script>
+(function() {
+    // Calculate time since March 18, 2020, 4:00 PM
+    function updateCountdown() {
+        const yearsEl = document.getElementById('years');
+        const monthsEl = document.getElementById('months');
+        const daysEl = document.getElementById('days');
+        
+        // Check if elements exist
+        if (!yearsEl || !monthsEl || !daysEl) {
+            console.log('Countdown elements not found, retrying in 50ms...');
+            setTimeout(updateCountdown, 50);
+            return;
+        }
+        
+        const eurostarEnd = new Date('2020-03-18T16:00:00');
+        const now = new Date();
+        
+        let years = now.getFullYear() - eurostarEnd.getFullYear();
+        let months = now.getMonth() - eurostarEnd.getMonth();
+        let days = now.getDate() - eurostarEnd.getDate();
+        
+        if (days < 0) {
+            months--;
+            const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+            days += lastMonth.getDate();
+        }
+        
+        if (months < 0) {
+            years--;
+            months += 12;
+        }
+        
+        console.log('Setting countdown values:', { years, months, days });
+        yearsEl.textContent = years;
+        monthsEl.textContent = months;
+        daysEl.textContent = days;
+    }
+    
+    // Start immediately
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', updateCountdown);
+    } else {
+        updateCountdown();
+    }
+    
+    // Update daily
+    setInterval(updateCountdown, 86400000);
+})();
+</script>

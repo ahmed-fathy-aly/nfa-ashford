@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= typeof title !== 'undefined' ? title + ' - ' : '' %>Ashford News</title>
+    <title>Normal For Ashford</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+    <!-- Fixed Header - Never Re-renders -->
     <header class="header">
-        <nav class="nav">
-            <div class="nav-container">
-                <a href="/" class="nav-logo">Ashford News</a>
+        <div class="nav-container">
+            <a href="/" class="nav-logo">Normal For Ashford</a>
+            <nav>
                 <ul class="nav-menu">
                     <li class="nav-item">
                         <a href="/" class="nav-link">Home</a>
@@ -19,18 +23,47 @@
                         <a href="/about" class="nav-link">About</a>
                     </li>
                 </ul>
-            </div>
-        </nav>
+            </nav>
+        </div>
+        <div class="header-skyline">
+            <svg viewBox="0 0 1440 120" fill="currentColor">
+                <path d="M0,120 L240,80 L480,100 L720,60 L960,110 L1200,90 L1440,120 L1440,120 L0,120 Z" transform="translate(0, 5)"></path>
+                <path d="M0,120 L120,100 L240,110 L360,90 L480,100 L600,80 L720,95 L840,70 L960,85 L1080,60 L1200,75 L1320,50 L1440,65 L1440,120 L0,120 Z" opacity="0.5"></path>
+            </svg>
+        </div>
     </header>
 
-    <main class="main-content">
+    <!-- Dynamic Content Container -->
+    <main id="spa-content" class="main-content">
         <%- body %>
     </main>
 
-    <footer class="footer">
-        <div class="footer-container">
-            <p>&copy; <%= new Date().getFullYear() %> Ashford News. All rights reserved.</p>
-        </div>
-    </footer>
+    <!-- SPA Router Script -->
+    <script src="/js/spa.js"></script>
+    
+    <!-- Scroll handler for header -->
+    <script>
+        let lastScrollTop = 0;
+        const header = document.querySelector('.header');
+        let scrollTimeout;
+
+        window.addEventListener('scroll', function() {
+            clearTimeout(scrollTimeout);
+            
+            scrollTimeout = setTimeout(() => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    header.classList.add('header-hidden');
+                    header.classList.remove('header-visible');
+                } else {
+                    header.classList.remove('header-hidden');
+                    header.classList.add('header-visible');
+                }
+                
+                lastScrollTop = scrollTop;
+            }, 10);
+        });
+    </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -7,6 +8,12 @@ const port = process.env.PORT || 3000;
 // Set EJS as the template engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+// Use express-ejs-layouts
+app.use(expressLayouts);
+app.set('layout', 'layout');
+app.set('layout extractScripts', true);
+app.set('layout extractStyles', true);
 
 // Serve static files from public directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -68,7 +75,14 @@ const articles = [
 
 // Routes
 app.get('/', (req, res) => {
-  res.render('index', { articles });
+  const isSPA = req.query.spa === 'true';
+  if (isSPA) {
+    // Return only content for SPA
+    res.render('content/home', { articles, layout: false });
+  } else {
+    // Return full page with layout
+    res.render('content/home', { articles });
+  }
 });
 
 app.get('/article/:id', (req, res) => {
@@ -76,11 +90,26 @@ app.get('/article/:id', (req, res) => {
   if (!article) {
     return res.status(404).render('404');
   }
-  res.render('article', { article });
+  
+  const isSPA = req.query.spa === 'true';
+  if (isSPA) {
+    // Return only content for SPA
+    res.render('content/article', { article, layout: false });
+  } else {
+    // Return full page with layout
+    res.render('content/article', { article });
+  }
 });
 
 app.get('/about', (req, res) => {
-  res.render('about');
+  const isSPA = req.query.spa === 'true';
+  if (isSPA) {
+    // Return only content for SPA
+    res.render('content/about', { layout: false });
+  } else {
+    // Return full page with layout
+    res.render('content/about');
+  }
 });
 
 // 404 handler

@@ -1,0 +1,28 @@
+<article class="article-full">
+    <div class="container">
+        <div class="article-header">
+            <div class="article-meta">
+                <time class="article-date"><%= new Date(article.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) %></time>
+                <div class="article-tags">
+                    <% article.tags.forEach(tag => { %>
+                        <span class="tag"><%= tag %></span>
+                    <% }); %>
+                </div>
+            </div>
+            <h1 class="article-title-large"><%= article.title %></h1>
+        </div>
+        
+        <div class="article-body">
+            <%- article.content %>
+        </div>
+        
+        <div class="article-footer">
+            <a href="/" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M12 16L6 10L12 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Back to Home
+            </a>
+        </div>
+    </div>
+</article>

@@ -36,60 +36,58 @@ document.body.classList.add('race-scrollbar-active', 'race-5k-article', 'article
         <div class="start-line">Start</div>
         <div class="finish-line">Finish</div>
         <div class="runner">
-            <div class="runner-body">
-                <!-- Animated runner body SVG -->
-                <svg class="runner-svg" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Body -->
-                    <ellipse cx="24" cy="28" rx="8" ry="12" fill="#2196F3"/>
-                    <!-- Left Leg -->
-                    <rect x="20" y="36" width="4" height="10" rx="2" fill="#1976D2">
-                        <animateTransform
-                            attributeName="transform"
-                            attributeType="XML"
-                            type="rotate"
-                            from="0 22 36"
-                            to="30 22 36"
-                            dur="0.3s"
-                            repeatCount="indefinite"/>
-                    </rect>
-                    <!-- Right Leg -->
-                    <rect x="24" y="36" width="4" height="10" rx="2" fill="#1976D2">
-                        <animateTransform
-                            attributeName="transform"
-                            attributeType="XML"
-                            type="rotate"
-                            from="0 26 36"
-                            to="-30 26 36"
-                            dur="0.3s"
-                            repeatCount="indefinite"/>
-                    </rect>
-                    <!-- Left Arm -->
-                    <rect x="16" y="24" width="3" height="8" rx="1.5" fill="#1976D2">
-                        <animateTransform
-                            attributeName="transform"
-                            attributeType="XML"
-                            type="rotate"
-                            from="-20 17.5 24"
-                            to="40 17.5 24"
-                            dur="0.3s"
-                            repeatCount="indefinite"/>
-                    </rect>
-                    <!-- Right Arm -->
-                    <rect x="29" y="24" width="3" height="8" rx="1.5" fill="#1976D2">
-                        <animateTransform
-                            attributeName="transform"
-                            attributeType="XML"
-                            type="rotate"
-                            from="40 30.5 24"
-                            to="-20 30.5 24"
-                            dur="0.3s"
-                            repeatCount="indefinite"/>
-                    </rect>
-                </svg>
-                <!-- Runner face image -->
-                <div class="runner-face">
-                    <img src="/runner_face.jpg" alt="Runner">
-                </div>
+            <!-- Animated runner body SVG -->
+            <svg class="runner-svg" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                <!-- Body -->
+                <ellipse cx="24" cy="28" rx="8" ry="12" fill="#2196F3"/>
+                <!-- Left Leg -->
+                <rect x="20" y="36" width="4" height="10" rx="2" fill="#1976D2">
+                    <animateTransform
+                        attributeName="transform"
+                        attributeType="XML"
+                        type="rotate"
+                        from="0 22 36"
+                        to="30 22 36"
+                        dur="0.3s"
+                        repeatCount="indefinite"/>
+                </rect>
+                <!-- Right Leg -->
+                <rect x="24" y="36" width="4" height="10" rx="2" fill="#1976D2">
+                    <animateTransform
+                        attributeName="transform"
+                        attributeType="XML"
+                        type="rotate"
+                        from="0 26 36"
+                        to="-30 26 36"
+                        dur="0.3s"
+                        repeatCount="indefinite"/>
+                </rect>
+                <!-- Left Arm -->
+                <rect x="16" y="24" width="3" height="8" rx="1.5" fill="#1976D2">
+                    <animateTransform
+                        attributeName="transform"
+                        attributeType="XML"
+                        type="rotate"
+                        from="-20 17.5 24"
+                        to="40 17.5 24"
+                        dur="0.3s"
+                        repeatCount="indefinite"/>
+                </rect>
+                <!-- Right Arm -->
+                <rect x="29" y="24" width="3" height="8" rx="1.5" fill="#1976D2">
+                    <animateTransform
+                        attributeName="transform"
+                        attributeType="XML"
+                        type="rotate"
+                        from="40 30.5 24"
+                        to="-20 30.5 24"
+                        dur="0.3s"
+                        repeatCount="indefinite"/>
+                </rect>
+            </svg>
+            <!-- Runner face image -->
+            <div class="runner-face">
+                <img src="/runner_face.jpg" alt="Runner">
             </div>
         </div>
         <div class="race-progress">0.00 km</div>
@@ -169,50 +167,26 @@ document.body.classList.add('race-scrollbar-active', 'race-5k-article', 'article
         updateRunnerPosition() {
             if (!this.article) return;
             
-            // Get article position and dimensions
-            const articleRect = this.article.getBoundingClientRect();
-            const articleTop = articleRect.top + window.pageYOffset;
-            const articleHeight = this.article.offsetHeight;
-            const articleBottom = articleTop + articleHeight;
-            
-            // Get current scroll position
+            // Calculate scroll percentage
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const windowHeight = window.innerHeight;
-            const scrollBottom = scrollTop + windowHeight;
-            
-            // Calculate how much of the article has been scrolled through
-            let scrollPercentage = 0;
-            
-            if (scrollTop >= articleTop && scrollTop < articleBottom) {
-                const scrolledIntoArticle = scrollTop - articleTop;
-                const visibleArticleHeight = Math.min(articleHeight, windowHeight);
-                const scrollableRange = articleHeight - visibleArticleHeight;
-                
-                if (scrollableRange > 0) {
-                    scrollPercentage = scrolledIntoArticle / scrollableRange;
-                }
-            } else if (scrollTop >= articleBottom) {
-                scrollPercentage = 1;
-            }
-            
-            // Clamp between 0 and 1
-            const clampedPercentage = Math.max(0, Math.min(1, scrollPercentage));
-            
-            // Get dimensions for current screen size
-            const dims = this.getDimensions();
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercentage = Math.min(Math.max((scrollTop / docHeight), 0), 1);
             
             // Get track dimensions
-            const trackHeight = this.track.offsetHeight;
-            const usableTrackHeight = trackHeight - dims.startLine - dims.finishLine - dims.runner;
+            const trackWidth = this.track.offsetWidth;
+            const dims = this.getDimensions();
             
-            // Calculate runner position (from top of usable track)
-            const runnerTop = dims.startLine + (usableTrackHeight * clampedPercentage);
+            // Calculate usable track width (minus start/finish zones and runner width)
+            const usableTrackWidth = trackWidth - 60 - 60 - (dims.runner / 2); // 60px for start/finish zones
+            
+            // Calculate runner position (from left)
+            const runnerLeft = 60 + (usableTrackWidth * scrollPercentage);
             
             // Update runner position
-            this.runner.style.top = `${runnerTop}px`;
+            this.runner.style.left = `${runnerLeft}px`;
             
             // Add celebration effect when reaching the finish
-            if (clampedPercentage >= 0.99) {
+            if (scrollPercentage >= 0.99) {
                 this.runner.classList.add('finished');
             } else {
                 this.runner.classList.remove('finished');

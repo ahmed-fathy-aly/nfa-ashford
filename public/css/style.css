@@ -952,61 +952,31 @@ body.race-5k-article {
 body.race-scrollbar-active {
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
+    padding-bottom: 120px; /* Space for horizontal scrollbar */
 }
 
 body.race-scrollbar-active::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */
 }
 
-/* No padding needed for desktop since content is centered with max-width */
-/* Padding only for smaller screens where content might overlap scrollbar */
-@media (max-width: 1200px) {
-    body.race-scrollbar-active .article-header,
-    body.race-scrollbar-active .article-body,
-    body.race-scrollbar-active .article-footer {
-        padding-right: 120px;
-    }
-}
-
-@media (max-width: 768px) {
-    body.race-scrollbar-active .article-header,
-    body.race-scrollbar-active .article-body,
-    body.race-scrollbar-active .article-footer {
-        padding-right: 100px;
-    }
-}
-
-@media (max-width: 480px) {
-    body.race-scrollbar-active .article-header,
-    body.race-scrollbar-active .article-body,
-    body.race-scrollbar-active .article-footer {
-        padding-right: 80px;
-    }
-}
-
-@media (max-width: 360px) {
-    body.race-scrollbar-active .article-header,
-    body.race-scrollbar-active .article-body,
-    body.race-scrollbar-active .article-footer {
-        padding-right: 65px;
-    }
-}
-
 .race-scrollbar {
     position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 80px;
-    height: calc(100vh - 40px); /* Full viewport height minus top and bottom padding */
-    z-index: 1000;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: linear-gradient(180deg, transparent 0%, rgba(245, 245, 245, 0.95) 20%, #f5f5f5 100%);
+    z-index: 900;
     pointer-events: none;
 }
 
 .race-track {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, 
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to right, 
         #e8f5e9 0%, 
         #c8e6c9 15%, 
         #a5d6a7 50%, 
@@ -1016,18 +986,19 @@ body.race-scrollbar-active::-webkit-scrollbar {
     border: 3px solid #4caf50;
     border-radius: 30px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    margin: 0 20px;
 }
 
 /* Track markings */
 .race-track::before {
     content: '';
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    background: linear-gradient(to bottom, 
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 2px;
+    background: linear-gradient(to right, 
         transparent 0%, 
         #81c784 5%, 
         transparent 10%,
@@ -1054,9 +1025,9 @@ body.race-scrollbar-active::-webkit-scrollbar {
 
 .start-line, .finish-line {
     position: absolute;
-    left: 0;
-    right: 0;
-    height: 30px;
+    top: 0;
+    bottom: 0;
+    width: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1069,14 +1040,14 @@ body.race-scrollbar-active::-webkit-scrollbar {
 }
 
 .start-line {
-    top: 0;
+    left: 0;
     background: linear-gradient(135deg, #2196f3, #1976d2);
-    border-radius: 27px 27px 0 0;
-    border-bottom: 2px solid #0d47a1;
+    border-radius: 27px 0 0 27px;
+    border-right: 2px solid #0d47a1;
 }
 
 .finish-line {
-    bottom: 0;
+    right: 0;
     background: repeating-linear-gradient(
         45deg,
         #000,
@@ -1084,17 +1055,18 @@ body.race-scrollbar-active::-webkit-scrollbar {
         #fff 5px,
         #fff 10px
     );
-    border-radius: 0 0 27px 27px;
+    border-radius: 0 27px 27px 0;
     color: #000;
 }
 
 .runner {
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
     width: 70px;
     height: 85px;
-    transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 2;
     filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
 }
@@ -1143,16 +1115,16 @@ body.race-scrollbar-active::-webkit-scrollbar {
 
 @keyframes celebrate {
     0%, 100% {
-        transform: translateX(-50%) scale(1);
+        transform: translate(-50%, -50%) scale(1);
     }
     25% {
-        transform: translateX(-50%) scale(1.1) rotate(-10deg);
+        transform: translate(-50%, -50%) scale(1.1) rotate(-10deg);
     }
     50% {
-        transform: translateX(-50%) scale(1.15);
+        transform: translate(-50%, -50%) scale(1.15);
     }
     75% {
-        transform: translateX(-50%) scale(1.1) rotate(10deg);
+        transform: translate(-50%, -50%) scale(1.1) rotate(10deg);
     }
 }
 
@@ -1250,5 +1222,206 @@ body.race-scrollbar-active::-webkit-scrollbar {
     .start-line, .finish-line {
         height: 18px;
         font-size: 7px;
+    }
+}
+
+/* Train Scrollbar - Railway Article */
+.train-scrollbar-active {
+    padding-bottom: 100px;
+}
+
+.train-scrollbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(180deg, transparent 0%, rgba(245, 245, 245, 0.95) 20%, #f5f5f5 100%);
+    z-index: 900;
+    pointer-events: none;
+}
+
+.train-track {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    height: 40px;
+}
+
+.railway-tracks {
+    position: absolute;
+    top: 38px;
+    left: 0;
+    right: 0;
+    height: 20px;
+}
+
+.rail {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(180deg, #616161 0%, #424242 50%, #212121 100%);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.rail-top {
+    top: 2px;
+}
+
+.rail-bottom {
+    top: 14px;
+}
+
+.sleepers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.sleeper {
+    width: 2px;
+    height: 20px;
+    background: linear-gradient(90deg, #8d6e63 0%, #6d4c41 100%);
+    opacity: 0.6;
+}
+
+.track-start, .track-end {
+    position: absolute;
+    top: -5px;
+    padding: 4px 10px;
+    background: rgba(33, 33, 33, 0.85);
+    color: white;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.track-start {
+    left: 20px;
+}
+
+.track-end {
+    right: 20px;
+}
+
+.train {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    transform: translateX(-50%);
+    transition: left 0.1s ease-out;
+    z-index: 10;
+}
+
+.train-svg {
+    width: 80px;
+    height: 40px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.train.moving .train-svg {
+    animation: trainBounce 0.3s ease-in-out infinite;
+}
+
+@keyframes trainBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-2px);
+    }
+}
+
+.smoke-container {
+    position: absolute;
+    top: -15px;
+    left: 15px;
+    width: 30px;
+    height: 30px;
+}
+
+.smoke {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, rgba(158, 158, 158, 0.6) 0%, rgba(189, 189, 189, 0.3) 50%, transparent 100%);
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.train.moving .smoke {
+    animation: smokePuff 1.5s ease-out infinite;
+}
+
+.smoke-1 {
+    animation-delay: 0s;
+}
+
+.smoke-2 {
+    animation-delay: 0.5s;
+}
+
+.smoke-3 {
+    animation-delay: 1s;
+}
+
+@keyframes smokePuff {
+    0% {
+        transform: translate(0, 0) scale(0.5);
+        opacity: 0.7;
+    }
+    50% {
+        transform: translate(-10px, -20px) scale(1.2);
+        opacity: 0.4;
+    }
+    100% {
+        transform: translate(-20px, -35px) scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* Responsive - Train Scrollbar */
+@media (max-width: 768px) {
+    .train-scrollbar {
+        height: 60px;
+    }
+    
+    .train-track {
+        top: 15px;
+        height: 30px;
+    }
+    
+    .railway-tracks {
+        top: 28px;
+    }
+    
+    .train-svg {
+        width: 60px;
+        height: 30px;
+    }
+    
+    .track-start, .track-end {
+        font-size: 9px;
+        padding: 3px 8px;
+    }
+    
+    .smoke-container {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .smoke {
+        width: 8px;
+        height: 8px;
     }
 }

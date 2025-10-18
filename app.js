@@ -93,10 +93,13 @@ app.get('/article/:id', (req, res) => {
   
   const isSPA = req.query.spa === 'true';
   
-  // Use different template for 5K article
-  const template = article.id === 'ashford-5k-park-run' 
-    ? 'content/article-5k' 
-    : 'content/article';
+  // Use different template for specific articles
+  let template = 'content/article';
+  if (article.id === 'ashford-5k-park-run') {
+    template = 'content/article-5k';
+  } else if (article.id === 'ashford-200-years-railway') {
+    template = 'content/article-railway';
+  }
   
   console.log(`Rendering article: ${article.id}, using template: ${template}, SPA: ${isSPA}`);
   

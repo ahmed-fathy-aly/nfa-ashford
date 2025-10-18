@@ -1,0 +1,103 @@
+<script>
+// Add body classes immediately to prevent header flash
+document.body.classList.add('train-scrollbar-active', 'railway-article', 'article-page');
+</script>
+
+<article class="article-full article-railway">
+    <div class="container">
+        <div class="article-header">
+            <time class="article-date"><%= new Date(article.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) %></time>
+            <h1 class="article-title-large"><%= article.title %></h1>
+            <div class="article-tags">
+                <% article.tags.forEach(tag => { %>
+                    <span class="tag"><%= tag %></span>
+                <% }); %>
+            </div>
+        </div>
+        
+        <div class="article-body">
+            <%- article.content %>
+        </div>
+        
+        <div class="article-footer">
+            <a href="/" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M12 16L6 10L12 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Back to Home
+            </a>
+        </div>
+    </div>
+</article>
+
+<!-- Train Track Scrollbar for Railway Article -->
+<div class="train-scrollbar">
+    <div class="train-track">
+        <div class="train">
+            <!-- Train SVG -->
+            <svg class="train-svg" viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
+                <!-- Train body -->
+                <rect x="10" y="8" width="60" height="20" rx="2" fill="#d32f2f"/>
+                <rect x="10" y="8" width="60" height="3" fill="#b71c1c"/>
+                
+                <!-- Windows -->
+                <rect x="15" y="12" width="8" height="8" rx="1" fill="#90caf9"/>
+                <rect x="27" y="12" width="8" height="8" rx="1" fill="#90caf9"/>
+                <rect x="39" y="12" width="8" height="8" rx="1" fill="#90caf9"/>
+                <rect x="51" y="12" width="8" height="8" rx="1" fill="#90caf9"/>
+                
+                <!-- Roof -->
+                <path d="M 8 8 L 10 4 L 70 4 L 72 8 Z" fill="#b71c1c"/>
+                
+                <!-- Front detail -->
+                <rect x="68" y="10" width="4" height="16" rx="1" fill="#ffeb3b"/>
+                
+                <!-- Wheels -->
+                <circle cx="20" cy="28" r="5" fill="#424242"/>
+                <circle cx="20" cy="28" r="2" fill="#757575"/>
+                <circle cx="35" cy="28" r="5" fill="#424242"/>
+                <circle cx="35" cy="28" r="2" fill="#757575"/>
+                <circle cx="50" cy="28" r="5" fill="#424242"/>
+                <circle cx="50" cy="28" r="2" fill="#757575"/>
+                <circle cx="65" cy="28" r="5" fill="#424242"/>
+                <circle cx="65" cy="28" r="2" fill="#757575"/>
+                
+                <!-- Wheel animation (slight rotation effect) -->
+                <animateTransform
+                    attributeName="transform"
+                    attributeType="XML"
+                    type="translate"
+                    values="0 0; 0 -1; 0 0; 0 1; 0 0"
+                    dur="0.5s"
+                    repeatCount="indefinite"/>
+            </svg>
+            
+            <!-- Smoke puffs -->
+            <div class="smoke-container">
+                <div class="smoke smoke-1"></div>
+                <div class="smoke smoke-2"></div>
+                <div class="smoke smoke-3"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Railway tracks -->
+    <div class="railway-tracks">
+        <div class="rail rail-top"></div>
+        <div class="rail rail-bottom"></div>
+        <div class="sleepers">
+            <div class="sleeper"></div>
+            <div class="sleeper"></div>
+            <div class="sleeper"></div>
+            <div class="sleeper"></div>
+            <div class="sleeper"></div>
+            <div class="sleeper"></div>
+            <div class="sleeper"></div>
+            <div class="sleeper"></div>
+            <div class="sleeper"></div>
+            <div class="sleeper"></div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/train-scrollbar.js"></script>

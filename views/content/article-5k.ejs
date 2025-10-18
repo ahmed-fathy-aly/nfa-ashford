@@ -8,11 +8,6 @@ document.body.classList.add('race-scrollbar-active', 'race-5k-article', 'article
         <div class="article-header">
             <time class="article-date"><%= new Date(article.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) %></time>
             <h1 class="article-title-large"><%= article.title %></h1>
-            <div class="article-tags">
-                <% article.tags.forEach(tag => { %>
-                    <span class="tag"><%= tag %></span>
-                <% }); %>
-            </div>
         </div>
         
         <div class="article-body">

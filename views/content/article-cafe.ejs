@@ -1,0 +1,192 @@
+<article class="article-full article-cafe">
+    <div class="cafe-header">
+        <div class="container">
+            <div class="cafe-header-content">
+                <div class="cafe-header-text">
+                    <time class="article-date">
+                        <%= new Date(article.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) %>
+                    </time>
+                    <h1 class="cafe-title"><%= article.title %></h1>
+                    <div class="cafe-location">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M10 2C6.13 2 3 5.13 3 9c0 5.25 7 11 7 11s7-5.75 7-11c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/>
+                        </svg>
+                        <span><%= article.address %></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="cafe-content-grid">
+            <!-- Main Content Column -->
+            <div class="cafe-main-content">
+                <div class="article-lead">
+                    <p class="lead-text"><%= article.excerpt %></p>
+                </div>
+                
+                <div class="article-body cafe-body">
+                    <%- article.content %>
+                </div>
+
+                <!-- Map Section in Content Flow -->
+                <div class="cafe-map-section">
+                    <h2 class="section-heading">Find Us</h2>
+                    <div class="map-container">
+                        <div id="cafe-map" class="google-map"></div>
+                        <div class="map-info">
+                            <div class="map-info-item">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/>
+                                </svg>
+                                <div>
+                                    <strong>Address</strong>
+                                    <p><%= article.address %></p>
+                                </div>
+                            </div>
+                            <a href="https://www.google.com/maps/dir/?api=1&destination=<%= encodeURIComponent(article.address) %>" 
+                               class="directions-button" 
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M17.5 8.33L10 2.5L2.5 8.33V15.83C2.5 16.05 2.59 16.27 2.74 16.42C2.89 16.57 3.11 16.67 3.33 16.67H7.5V11.67H12.5V16.67H16.67C16.89 16.67 17.11 16.57 17.26 16.42C17.41 16.27 17.5 16.05 17.5 15.83V8.33Z" fill="currentColor"/>
+                                </svg>
+                                Get Directions
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Column -->
+            <aside class="cafe-sidebar">
+                <div class="sidebar-sticky">
+                    <div class="sidebar-card cafe-quick-info">
+                        <h3 class="sidebar-heading">Quick Info</h3>
+                        <ul class="info-list">
+                            <li>
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18Z" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M10 5V10L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                <span><strong>Type:</strong> Independent Cafe</span>
+                            </li>
+                            <li>
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M15 7H13V5C13 3.35 11.65 2 10 2C8.35 2 7 3.35 7 5V7H5C3.9 7 3 7.9 3 9V17C3 18.1 3.9 19 5 19H15C16.1 19 17 18.1 17 17V9C17 7.9 16.1 7 15 7ZM10 14.5C9.17 14.5 8.5 13.83 8.5 13C8.5 12.17 9.17 11.5 10 11.5C10.83 11.5 11.5 12.17 11.5 13C11.5 13.83 10.83 14.5 10 14.5ZM11.5 7H8.5V5C8.5 4.17 9.17 3.5 10 3.5C10.83 3.5 11.5 4.17 11.5 5V7Z" fill="currentColor"/>
+                                </svg>
+                                <span><strong>Atmosphere:</strong> Modern & Trendy</span>
+                            </li>
+                            <li>
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M3 7L10 2L17 7V16C17 16.55 16.55 17 16 17H4C3.45 17 3 16.55 3 16V7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                    <path d="M7.5 17V10H12.5V17" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                </svg>
+                                <span><strong>Location:</strong> Cedar Parade</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-card cafe-specialties">
+                        <h3 class="sidebar-heading">Specialties</h3>
+                        <ul class="specialties-list">
+                            <li>☕ Specialty Coffee</li>
+                            <li>🥐 Fresh Pastries</li>
+                            <li>🥪 Artisan Sandwiches</li>
+                            <li>📱 Instagram-Worthy Decor</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-card cafe-popular">
+                        <h3 class="sidebar-heading">Why Visit?</h3>
+                        <p class="sidebar-text">
+                            One of Ashford's most popular independent cafes, perfect for remote work, 
+                            catching up with friends, or simply enjoying quality coffee in a stylish setting.
+                        </p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <div class="article-footer">
+            <a href="/" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M12 16L6 10L12 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Back to Home
+            </a>
+        </div>
+    </div>
+</article>
+
+<script>
+// Add article-page class
+document.body.classList.add('article-page', 'cafe-article-page');
+
+// Initialize Google Map
+function initCafeMap() {
+    const cafeLocation = {
+        lat: <%= article.coordinates.lat %>,
+        lng: <%= article.coordinates.lng %>
+    };
+
+    const map = new google.maps.Map(document.getElementById('cafe-map'), {
+        center: cafeLocation,
+        zoom: 16,
+        styles: [
+            {
+                "featureType": "poi",
+                "elementType": "labels.text",
+                "stylers": [{"visibility": "off"}]
+            },
+            {
+                "featureType": "poi.business",
+                "stylers": [{"visibility": "off"}]
+            },
+            {
+                "featureType": "road",
+                "elementType": "labels.icon",
+                "stylers": [{"visibility": "off"}]
+            },
+            {
+                "featureType": "transit",
+                "stylers": [{"visibility": "off"}]
+            }
+        ],
+        mapTypeControl: false,
+        streetViewControl: true,
+        fullscreenControl: true
+    });
+
+    // Custom marker
+    const marker = new google.maps.Marker({
+        position: cafeLocation,
+        map: map,
+        title: '<%= article.title %>',
+        animation: google.maps.Animation.DROP
+    });
+
+    // Info window
+    const infoWindow = new google.maps.InfoWindow({
+        content: `
+            <div style="padding: 10px; max-width: 250px;">
+                <h3 style="margin: 0 0 8px 0; font-size: 16px; font-weight: 600;">No61 Cafe</h3>
+                <p style="margin: 0 0 8px 0; font-size: 13px; color: #666;"><%= article.address %></p>
+                <a href="https://www.google.com/maps/dir/?api=1&destination=<%= encodeURIComponent(article.address) %>" 
+                   target="_blank" 
+                   style="display: inline-block; padding: 6px 12px; background: #1a73e8; color: white; text-decoration: none; border-radius: 4px; font-size: 13px; margin-top: 4px;">
+                    Get Directions
+                </a>
+            </div>
+        `
+    });
+
+    marker.addListener('click', () => {
+        infoWindow.open(map, marker);
+    });
+}
+</script>
+
+<!-- Load Google Maps API -->
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.GOOGLE_MAPS_API_KEY %>&callback=initCafeMap" async defer></script>

@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const expressLayouts = require('express-ejs-layouts');
+require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -55,6 +56,28 @@ const articles = [
     `
   },
   {
+    id: 'no61-cafe-ashford',
+    title: 'No61 Cafe: A Modern Haven in Ashford',
+    excerpt: 'A very popular and trendy independent cafe with a modern, social media-savvy name bringing specialty coffee and artisan treats to Cedar Parade.',
+    date: '2025-10-18',
+    image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    tags: ['Food', 'Local Business'],
+    address: 'Units 3-4, Cedar Parade, Repton Ave, Ashford TN23 3TE, UK',
+    coordinates: {
+      lat: 51.15602346764579,
+      lng: 0.8575049031636497
+    },
+    content: `
+      <p>Nestled in the heart of Cedar Parade on Repton Avenue, No61 Cafe has quickly become one of Ashford's most beloved independent coffee shops. With its modern aesthetic and social media-savvy approach, this trendy establishment has captured the hearts of locals and visitors alike.</p>
+      
+      <p>The cafe's distinctive name pays homage to its location while maintaining a contemporary edge that resonates with today's coffee culture. From the moment you step through the doors at Units 3-4, you're greeted with the rich aroma of specialty coffee and the warm ambiance that has made No61 a community favorite.</p>
+      
+      <p>What sets No61 apart is its commitment to quality and community. The cafe serves artisan coffee sourced from ethical suppliers, alongside a carefully curated menu of fresh pastries, sandwiches, and light meals. The interior design strikes a perfect balance between Instagram-worthy aesthetics and genuine comfort, making it an ideal spot for both remote workers and social gatherings.</p>
+      
+      <p>Open throughout the week, No61 Cafe has become more than just a place to grab a coffee—it's a social hub where Ashford residents come together, share stories, and build connections. Whether you're looking for a quiet corner to work or a vibrant atmosphere to catch up with friends, No61 delivers on all fronts.</p>
+    `
+  },
+  {
     id: 'protect-your-bike-ashford',
     title: 'Protect Your Bike in Ashford',
     excerpt: 'Praesent libero sed cursus ante dapibus diam. Integer nec odio sed nisi nulla quis sem at nibh elementum imperdiet.',
@@ -99,6 +122,8 @@ app.get('/article/:id', (req, res) => {
     template = 'content/article-5k';
   } else if (article.id === 'ashford-200-years-railway') {
     template = 'content/article-railway';
+  } else if (article.id === 'no61-cafe-ashford') {
+    template = 'content/article-cafe';
   }
   
   console.log(`Rendering article: ${article.id}, using template: ${template}, SPA: ${isSPA}`);

@@ -1134,8 +1134,8 @@ body.race-scrollbar-active::-webkit-scrollbar {
     top: 2%;
     left: 50%;
     transform: translateX(-50%);
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     overflow: hidden;
     z-index: 1;
@@ -1159,8 +1159,12 @@ body.race-scrollbar-active::-webkit-scrollbar {
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .race-scrollbar {
-        right: 8px;
-        width: 60px;
+        height: 80px;
+    }
+    
+    .race-track {
+        height: 50px;
+        top: 15px;
     }
     
     .runner {
@@ -1169,21 +1173,28 @@ body.race-scrollbar-active::-webkit-scrollbar {
     }
     
     .runner-face {
-        width: 40px;
-        height: 40px;
+        width: 48px;
+        height: 48px;
         border: 2.5px solid #fff;
     }
     
     .start-line, .finish-line {
-        height: 24px;
+        width: 50px;
         font-size: 9px;
+    }
+    
+    body.race-scrollbar-active {
+        padding-bottom: 100px;
     }
 }
 
 @media (max-width: 480px) {
     .race-scrollbar {
-        right: 5px;
-        width: 50px;
+        height: 70px;
+    }
+    
+    .race-track {
+        height: 45px;
     }
     
     .runner {
@@ -1198,15 +1209,23 @@ body.race-scrollbar-active::-webkit-scrollbar {
     }
     
     .start-line, .finish-line {
-        height: 20px;
+        width: 45px;
         font-size: 8px;
+    }
+    
+    body.race-scrollbar-active {
+        padding-bottom: 90px;
     }
 }
 
 @media (max-width: 360px) {
     .race-scrollbar {
-        right: 3px;
-        width: 44px;
+        height: 60px;
+    }
+    
+    .race-track {
+        height: 40px;
+        margin: 0 10px;
     }
     
     .runner {
@@ -1220,8 +1239,12 @@ body.race-scrollbar-active::-webkit-scrollbar {
     }
     
     .start-line, .finish-line {
-        height: 18px;
+        width: 40px;
         font-size: 7px;
+    }
+    
+    body.race-scrollbar-active {
+        padding-bottom: 80px;
     }
 }
 

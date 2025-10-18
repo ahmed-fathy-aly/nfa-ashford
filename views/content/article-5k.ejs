@@ -170,23 +170,30 @@ document.body.classList.add('race-scrollbar-active', 'race-5k-article', 'article
             // Calculate scroll percentage
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercentage = Math.min(Math.max((scrollTop / docHeight), 0), 1);
+            const scrollPercentage = docHeight > 0 ? Math.min(Math.max((scrollTop / docHeight), 0), 1) : 0;
             
             // Get track dimensions
-            const trackWidth = this.track.offsetWidth;
+            const trackRect = this.track.getBoundingClientRect();
+            const trackWidth = trackRect.width;
             const dims = this.getDimensions();
             
-            // Calculate usable track width (minus start/finish zones and runner width)
-            const usableTrackWidth = trackWidth - 60 - 60 - (dims.runner / 2); // 60px for start/finish zones
+            // Calculate zones
+            const startZoneWidth = 60;
+            const finishZoneWidth = 60;
+            const runnerWidth = dims.runner;
             
-            // Calculate runner position (from left)
-            const runnerLeft = 60 + (usableTrackWidth * scrollPercentage);
+            // Calculate usable track width - runner should go from start to past finish
+            // Add runner width to ensure it fully crosses the finish line
+            const usableTrackWidth = trackWidth - startZoneWidth + runnerWidth;
+            
+            // Calculate runner position (from left edge of track)
+            const runnerLeft = startZoneWidth + (usableTrackWidth * scrollPercentage) - (runnerWidth / 2);
             
             // Update runner position
             this.runner.style.left = `${runnerLeft}px`;
             
             // Add celebration effect when reaching the finish
-            if (scrollPercentage >= 0.99) {
+            if (scrollPercentage >= 0.95) {
                 this.runner.classList.add('finished');
             } else {
                 this.runner.classList.remove('finished');

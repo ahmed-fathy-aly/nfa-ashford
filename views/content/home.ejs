@@ -1,23 +1,37 @@
 <div class="container">
     <!-- Eurostar Countdown -->
     <div class="eurostar-countdown">
-        <div class="countdown-header">
-            <h2 class="countdown-title">Last Eurostar from Ashford International</h2>
-            <p class="countdown-subtitle">Final service departed: March 18, 2020</p>
-        </div>
         <div class="countdown-display">
             <div class="countdown-item">
-                <span class="countdown-value" id="years">0</span>
+                <div class="flip-card">
+                    <span class="countdown-value" id="years">0</span>
+                </div>
                 <span class="countdown-label">Years</span>
             </div>
             <div class="countdown-item">
-                <span class="countdown-value" id="months">0</span>
+                <div class="flip-card">
+                    <span class="countdown-value" id="months">0</span>
+                </div>
                 <span class="countdown-label">Months</span>
             </div>
             <div class="countdown-item">
-                <span class="countdown-value" id="days">0</span>
+                <div class="flip-card">
+                    <span class="countdown-value" id="days">0</span>
+                </div>
                 <span class="countdown-label">Days</span>
             </div>
+        </div>
+        <div class="countdown-header">
+            <h2 class="countdown-title">since the last Eurostar from Ashford International</h2>
+        </div>
+        <div class="countdown-cta">
+            <p class="cta-text">Help bring back international rail services to Ashford</p>
+            <a href="https://www.change.org/p/bring-back-eurostar-train-services-to-kent" target="_blank" rel="noopener noreferrer" class="petition-button">
+                Sign Petition
+                <svg class="arrow-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
         </div>
     </div>
 
@@ -86,10 +100,60 @@
             months += 12;
         }
         
-        console.log('Setting countdown values:', { years, months, days });
-        yearsEl.textContent = years;
-        monthsEl.textContent = months;
-        daysEl.textContent = days;
+        console.log('Final countdown values:', { years, months, days });
+        
+        // Check if animation has already played in this session
+        const hasAnimationPlayed = sessionStorage.getItem('countdownAnimationPlayed');
+        
+        if (hasAnimationPlayed) {
+            // Just set the values directly without animation
+            yearsEl.textContent = String(years).padStart(2, '0');
+            monthsEl.textContent = String(months).padStart(2, '0');
+            daysEl.textContent = String(days).padStart(2, '0');
+            
+            // Remove animation class to prevent CSS animation
+            yearsEl.style.animation = 'none';
+            monthsEl.style.animation = 'none';
+            daysEl.style.animation = 'none';
+            return;
+        }
+        
+        // Mark that animation has played
+        sessionStorage.setItem('countdownAnimationPlayed', 'true');
+        
+        // Animate the numbers flipping with changing values
+        function animateCounter(element, finalValue, duration, delay) {
+            setTimeout(() => {
+                const startTime = Date.now();
+                const maxValue = Math.max(finalValue * 2, 20); // Show higher numbers for effect
+                
+                function updateNumber() {
+                    const elapsed = Date.now() - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    if (progress < 1) {
+                        // Generate random-ish numbers that gradually approach the final value
+                        const range = maxValue - finalValue;
+                        const currentRange = range * (1 - progress);
+                        const randomValue = Math.floor(finalValue + Math.random() * currentRange);
+                        element.textContent = String(randomValue).padStart(2, '0');
+                        
+                        // Sync with flip animation - update every ~100ms during flips
+                        setTimeout(updateNumber, 100);
+                    } else {
+                        // Set final value with leading zero
+                        element.textContent = String(finalValue).padStart(2, '0');
+                    }
+                }
+                
+                updateNumber();
+            }, delay);
+        }
+        
+        // Animate each counter with staggered delays matching the CSS animation
+        animateCounter(yearsEl, years, 2000, 0);
+        animateCounter(monthsEl, months, 2000, 200);
+        animateCounter(daysEl, days, 2000, 400);
     }
     
     // Start immediately

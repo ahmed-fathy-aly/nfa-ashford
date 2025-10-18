@@ -1,0 +1,226 @@
+<script>
+// Add body classes immediately to prevent header flash
+document.body.classList.add('race-scrollbar-active', 'race-5k-article', 'article-page');
+</script>
+
+<article class="article-full article-5k">
+    <div class="container">
+        <div class="article-header">
+            <time class="article-date"><%= new Date(article.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) %></time>
+            <h1 class="article-title-large"><%= article.title %></h1>
+            <div class="article-tags">
+                <% article.tags.forEach(tag => { %>
+                    <span class="tag"><%= tag %></span>
+                <% }); %>
+            </div>
+        </div>
+        
+        <div class="article-body">
+            <%- article.content %>
+        </div>
+        
+        <div class="article-footer">
+            <a href="/" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M12 16L6 10L12 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Back to Home
+            </a>
+        </div>
+    </div>
+</article>
+
+<!-- Race Track Scrollbar for 5K Article -->
+<div class="race-scrollbar">
+    <div class="race-track">
+        <div class="start-line">Start</div>
+        <div class="finish-line">Finish</div>
+        <div class="runner">
+            <div class="runner-body">
+                <!-- Animated runner body SVG -->
+                <svg class="runner-svg" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Body -->
+                    <ellipse cx="24" cy="28" rx="8" ry="12" fill="#2196F3"/>
+                    <!-- Left Leg -->
+                    <rect x="20" y="36" width="4" height="10" rx="2" fill="#1976D2">
+                        <animateTransform
+                            attributeName="transform"
+                            attributeType="XML"
+                            type="rotate"
+                            from="0 22 36"
+                            to="30 22 36"
+                            dur="0.3s"
+                            repeatCount="indefinite"/>
+                    </rect>
+                    <!-- Right Leg -->
+                    <rect x="24" y="36" width="4" height="10" rx="2" fill="#1976D2">
+                        <animateTransform
+                            attributeName="transform"
+                            attributeType="XML"
+                            type="rotate"
+                            from="0 26 36"
+                            to="-30 26 36"
+                            dur="0.3s"
+                            repeatCount="indefinite"/>
+                    </rect>
+                    <!-- Left Arm -->
+                    <rect x="16" y="24" width="3" height="8" rx="1.5" fill="#1976D2">
+                        <animateTransform
+                            attributeName="transform"
+                            attributeType="XML"
+                            type="rotate"
+                            from="-20 17.5 24"
+                            to="40 17.5 24"
+                            dur="0.3s"
+                            repeatCount="indefinite"/>
+                    </rect>
+                    <!-- Right Arm -->
+                    <rect x="29" y="24" width="3" height="8" rx="1.5" fill="#1976D2">
+                        <animateTransform
+                            attributeName="transform"
+                            attributeType="XML"
+                            type="rotate"
+                            from="40 30.5 24"
+                            to="-20 30.5 24"
+                            dur="0.3s"
+                            repeatCount="indefinite"/>
+                    </rect>
+                </svg>
+                <!-- Runner face image -->
+                <div class="runner-face">
+                    <img src="/runner_face.jpg" alt="Runner">
+                </div>
+            </div>
+        </div>
+        <div class="race-progress">0.00 km</div>
+    </div>
+</div>
+
+<script>
+// Race Scrollbar - Interactive 5K Race Progress Indicator (Inline for 5K Article)
+(function() {
+    class RaceScrollbar5K {
+        constructor() {
+            this.scrollbar = document.querySelector('.race-scrollbar');
+            if (!this.scrollbar) return;
+
+            this.runner = this.scrollbar.querySelector('.runner');
+            this.progressText = this.scrollbar.querySelector('.race-progress');
+            this.track = this.scrollbar.querySelector('.race-track');
+            this.article = document.querySelector('.article-5k');
+            
+            // Body classes already added at top of file to prevent header flash
+            
+            // Track scrolling state
+            this.scrollTimeout = null;
+            this.isScrolling = false;
+            
+            // Bind methods for proper event listener removal
+            this.boundHandleScroll = this.handleScroll.bind(this);
+            this.boundUpdatePosition = this.updateRunnerPosition.bind(this);
+            
+            this.init();
+        }
+
+        init() {
+            // Update on scroll
+            window.addEventListener('scroll', this.boundHandleScroll);
+            window.addEventListener('resize', this.boundUpdatePosition);
+            
+            // Initial position
+            this.updateRunnerPosition();
+        }
+        
+        handleScroll() {
+            // Add running class when scrolling starts
+            if (!this.isScrolling) {
+                this.isScrolling = true;
+                this.runner.classList.add('running');
+            }
+            
+            // Update position
+            this.updateRunnerPosition();
+            
+            // Clear previous timeout
+            clearTimeout(this.scrollTimeout);
+            
+            // Remove running class after scrolling stops (200ms of no scroll)
+            this.scrollTimeout = setTimeout(() => {
+                this.isScrolling = false;
+                this.runner.classList.remove('running');
+            }, 200);
+        }
+
+        getDimensions() {
+            // Get dimensions dynamically based on screen size
+            const width = window.innerWidth;
+            
+            if (width <= 360) {
+                return { startLine: 18, finishLine: 18, runner: 54 };
+            } else if (width <= 480) {
+                return { startLine: 20, finishLine: 20, runner: 62 };
+            } else if (width <= 768) {
+                return { startLine: 24, finishLine: 24, runner: 72 };
+            } else {
+                return { startLine: 30, finishLine: 30, runner: 85 };
+            }
+        }
+
+        updateRunnerPosition() {
+            if (!this.article) return;
+            
+            // Get article position and dimensions
+            const articleRect = this.article.getBoundingClientRect();
+            const articleTop = articleRect.top + window.pageYOffset;
+            const articleHeight = this.article.offsetHeight;
+            const articleBottom = articleTop + articleHeight;
+            
+            // Get current scroll position
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const windowHeight = window.innerHeight;
+            const scrollBottom = scrollTop + windowHeight;
+            
+            // Calculate how much of the article has been scrolled through
+            let scrollPercentage = 0;
+            
+            if (scrollTop >= articleTop && scrollTop < articleBottom) {
+                const scrolledIntoArticle = scrollTop - articleTop;
+                const visibleArticleHeight = Math.min(articleHeight, windowHeight);
+                const scrollableRange = articleHeight - visibleArticleHeight;
+                
+                if (scrollableRange > 0) {
+                    scrollPercentage = scrolledIntoArticle / scrollableRange;
+                }
+            } else if (scrollTop >= articleBottom) {
+                scrollPercentage = 1;
+            }
+            
+            // Clamp between 0 and 1
+            const clampedPercentage = Math.max(0, Math.min(1, scrollPercentage));
+            
+            // Get dimensions for current screen size
+            const dims = this.getDimensions();
+            
+            // Get track dimensions
+            const trackHeight = this.track.offsetHeight;
+            const usableTrackHeight = trackHeight - dims.startLine - dims.finishLine - dims.runner;
+            
+            // Calculate runner position (from top of usable track)
+            const runnerTop = dims.startLine + (usableTrackHeight * clampedPercentage);
+            
+            // Update runner position
+            this.runner.style.top = `${runnerTop}px`;
+            
+            // Add celebration effect when reaching the finish
+            if (clampedPercentage >= 0.99) {
+                this.runner.classList.add('finished');
+            } else {
+                this.runner.classList.remove('finished');
+            }
+        }
+    }
+
+    // Initialize immediately
+    new RaceScrollbar5K();
+})();
+</script>

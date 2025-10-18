@@ -8,6 +8,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
+    <script>
+        // Prevent header flash on article pages - runs before body renders
+        (function() {
+            // Check if this is an article page by looking at the URL
+            const path = window.location.pathname;
+            if (path.startsWith('/article/')) {
+                // Add classes to documentElement before body is parsed
+                document.documentElement.classList.add('is-article-page');
+            }
+        })();
+    </script>
 </head>
 <body>
     <!-- Fixed Header - Never Re-renders -->
@@ -45,25 +56,23 @@
     <script>
         let lastScrollTop = 0;
         const header = document.querySelector('.header');
-        let scrollTimeout;
 
         window.addEventListener('scroll', function() {
-            clearTimeout(scrollTimeout);
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             
-            scrollTimeout = setTimeout(() => {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                
-                if (scrollTop > lastScrollTop && scrollTop > 100) {
-                    header.classList.add('header-hidden');
-                    header.classList.remove('header-visible');
-                } else {
-                    header.classList.remove('header-hidden');
-                    header.classList.add('header-visible');
-                }
-                
-                lastScrollTop = scrollTop;
-            }, 10);
-        });
+            // Show header when scrolling up, hide when scrolling down (past 50px threshold)
+            if (scrollTop > lastScrollTop && scrollTop > 50) {
+                // Scrolling down - hide header
+                header.classList.add('header-hidden');
+                header.classList.remove('header-visible');
+            } else if (scrollTop < lastScrollTop) {
+                // Scrolling up - show header
+                header.classList.remove('header-hidden');
+                header.classList.add('header-visible');
+            }
+            
+            lastScrollTop = scrollTop;
+        }, { passive: true });
     </script>
 </body>
 </html>

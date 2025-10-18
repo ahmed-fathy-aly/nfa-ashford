@@ -1,15 +1,13 @@
 <article class="article-full">
     <div class="container">
         <div class="article-header">
-            <div class="article-meta">
-                <time class="article-date"><%= new Date(article.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) %></time>
-                <div class="article-tags">
-                    <% article.tags.forEach(tag => { %>
-                        <span class="tag"><%= tag %></span>
-                    <% }); %>
-                </div>
-            </div>
+            <time class="article-date"><%= new Date(article.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) %></time>
             <h1 class="article-title-large"><%= article.title %></h1>
+            <div class="article-tags">
+                <% article.tags.forEach(tag => { %>
+                    <span class="tag"><%= tag %></span>
+                <% }); %>
+            </div>
         </div>
         
         <div class="article-body">
@@ -26,3 +24,8 @@
         </div>
     </div>
 </article>
+
+<script>
+// Add article-page class for non-5K articles
+document.body.classList.add('article-page');
+</script>

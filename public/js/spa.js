@@ -32,6 +32,11 @@ class SPARouter {
 
     async loadContent(url, shouldScrollToTop) {
         try {
+            // Remove all article-specific classes before loading new content
+            document.body.classList.remove('article-page');
+            document.body.classList.remove('race-scrollbar-active');
+            document.body.classList.remove('race-5k-article');
+            
             // Show loading state
             this.contentContainer.style.opacity = '0.5';
             

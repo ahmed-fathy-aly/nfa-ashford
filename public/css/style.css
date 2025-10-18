@@ -81,6 +81,33 @@ body {
     padding-top: 192px;
 }
 
+/* Hide header on article pages */
+body.article-page .header {
+    display: none;
+}
+
+body.article-page {
+    padding-top: 0;
+}
+
+/* Hide header immediately when URL indicates article page (prevents flash) */
+html.is-article-page .header {
+    display: none !important;
+}
+
+html.is-article-page body {
+    padding-top: 0 !important;
+}
+
+/* 5K Race Article Specific Styles */
+body.race-5k-article .header {
+    display: none;
+}
+
+body.race-5k-article {
+    padding-top: 0;
+}
+
 .nav-container {
     position: relative;
     z-index: 10;
@@ -345,7 +372,7 @@ body {
 /* Full Article Page */
 .article-full {
     background: white;
-    padding: 3rem 0;
+    padding: 0 0 3rem 0; /* Only bottom padding, no top padding */
     margin: 0;
     width: 100%;
     max-width: 100vw;
@@ -353,10 +380,12 @@ body {
     border-radius: 0;
     border: none;
     box-shadow: none;
+    position: relative;
+    min-height: 100vh; /* Take full height of screen */
 }
 
 .article-full .container {
-    max-width: 900px;
+    max-width: 800px; /* Fixed max-width for desktop */
     margin: 0 auto;
     padding: 0 2rem;
     width: 100%;
@@ -367,6 +396,36 @@ body {
     margin-bottom: 2.5rem;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 2rem;
+}
+
+.article-header .article-date {
+    display: block;
+    color: #999;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem; /* Space below date before title */
+}
+
+.article-title-large {
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem; /* Space below title before tags */
+    color: #1a1a1a;
+    line-height: 1.2;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.article-header .article-tags {
+    position: static; /* Override the absolute positioning from .article-tags */
+    top: auto;
+    left: auto;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0; /* No margin needed after tags */
 }
 
 .article-title-full {
@@ -403,6 +462,10 @@ body {
     border-left: 4px solid #FF6B35;
     border-radius: 12px;
     backdrop-filter: blur(10px);
+}
+
+.article-footer {
+    margin-top: 3rem;
 }
 
 /* Navigation */
@@ -631,7 +694,7 @@ body {
     }
     
     .article-full {
-        padding: 3rem;
+        padding: 0 3rem 3rem 3rem; /* No top padding, bottom and side padding */
     }
     
     .about-content {
@@ -648,5 +711,312 @@ body {
     
     .card-image-container {
         height: 320px;
+    }
+}
+
+/* Race Track Scrollbar for 5K Article */
+
+/* Hide default scrollbar when race scrollbar is active */
+body.race-scrollbar-active {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+body.race-scrollbar-active::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* No padding needed for desktop since content is centered with max-width */
+/* Padding only for smaller screens where content might overlap scrollbar */
+@media (max-width: 1200px) {
+    body.race-scrollbar-active .article-header,
+    body.race-scrollbar-active .article-body,
+    body.race-scrollbar-active .article-footer {
+        padding-right: 120px;
+    }
+}
+
+@media (max-width: 768px) {
+    body.race-scrollbar-active .article-header,
+    body.race-scrollbar-active .article-body,
+    body.race-scrollbar-active .article-footer {
+        padding-right: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    body.race-scrollbar-active .article-header,
+    body.race-scrollbar-active .article-body,
+    body.race-scrollbar-active .article-footer {
+        padding-right: 80px;
+    }
+}
+
+@media (max-width: 360px) {
+    body.race-scrollbar-active .article-header,
+    body.race-scrollbar-active .article-body,
+    body.race-scrollbar-active .article-footer {
+        padding-right: 65px;
+    }
+}
+
+.race-scrollbar {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 80px;
+    height: calc(100vh - 40px); /* Full viewport height minus top and bottom padding */
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.race-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, 
+        #e8f5e9 0%, 
+        #c8e6c9 15%, 
+        #a5d6a7 50%, 
+        #c8e6c9 85%, 
+        #e8f5e9 100%
+    );
+    border: 3px solid #4caf50;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Track markings */
+.race-track::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    background: linear-gradient(to bottom, 
+        transparent 0%, 
+        #81c784 5%, 
+        transparent 10%,
+        #81c784 15%,
+        transparent 20%,
+        #81c784 25%,
+        transparent 30%,
+        #81c784 35%,
+        transparent 40%,
+        #81c784 45%,
+        transparent 50%,
+        #81c784 55%,
+        transparent 60%,
+        #81c784 65%,
+        transparent 70%,
+        #81c784 75%,
+        transparent 80%,
+        #81c784 85%,
+        transparent 90%,
+        #81c784 95%,
+        transparent 100%
+    );
+}
+
+.start-line, .finish-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 1;
+}
+
+.start-line {
+    top: 0;
+    background: linear-gradient(135deg, #2196f3, #1976d2);
+    border-radius: 27px 27px 0 0;
+    border-bottom: 2px solid #0d47a1;
+}
+
+.finish-line {
+    bottom: 0;
+    background: repeating-linear-gradient(
+        45deg,
+        #000,
+        #000 5px,
+        #fff 5px,
+        #fff 10px
+    );
+    border-radius: 0 0 27px 27px;
+    color: #000;
+}
+
+.runner {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 85px;
+    transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+}
+
+.runner-body {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Animated running person body (SVG) */
+.runner-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: run 0.4s steps(4) infinite;
+    animation-play-state: paused;
+}
+
+/* Running animation activates when scrolling */
+.runner.running .runner-svg {
+    animation-play-state: running;
+}
+
+@keyframes run {
+    0%, 100% {
+        transform: rotate(-5deg) scale(1);
+    }
+    25% {
+        transform: rotate(5deg) scale(1.03);
+    }
+    50% {
+        transform: rotate(-5deg) scale(1);
+    }
+    75% {
+        transform: rotate(3deg) scale(1.02);
+    }
+}
+
+/* Celebration animation when finished */
+.runner.finished {
+    animation: celebrate 1s ease-in-out infinite;
+}
+
+@keyframes celebrate {
+    0%, 100% {
+        transform: translateX(-50%) scale(1);
+    }
+    25% {
+        transform: translateX(-50%) scale(1.1) rotate(-10deg);
+    }
+    50% {
+        transform: translateX(-50%) scale(1.15);
+    }
+    75% {
+        transform: translateX(-50%) scale(1.1) rotate(10deg);
+    }
+}
+
+/* Runner face */
+.runner-face {
+    position: absolute;
+    top: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: 1;
+    border: 3px solid #fff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+    background: #fff;
+}
+
+.runner-face img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top; /* Show from top, which typically includes the bottom of face */
+}
+
+/* Progress text - Hidden */
+.race-progress {
+    display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .race-scrollbar {
+        right: 8px;
+        width: 60px;
+    }
+    
+    .runner {
+        width: 58px;
+        height: 72px;
+    }
+    
+    .runner-face {
+        width: 40px;
+        height: 40px;
+        border: 2.5px solid #fff;
+    }
+    
+    .start-line, .finish-line {
+        height: 24px;
+        font-size: 9px;
+    }
+}
+
+@media (max-width: 480px) {
+    .race-scrollbar {
+        right: 5px;
+        width: 50px;
+    }
+    
+    .runner {
+        width: 50px;
+        height: 62px;
+    }
+    
+    .runner-face {
+        width: 34px;
+        height: 34px;
+        border: 2px solid #fff;
+    }
+    
+    .start-line, .finish-line {
+        height: 20px;
+        font-size: 8px;
+    }
+}
+
+@media (max-width: 360px) {
+    .race-scrollbar {
+        right: 3px;
+        width: 44px;
+    }
+    
+    .runner {
+        width: 44px;
+        height: 54px;
+    }
+    
+    .runner-face {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .start-line, .finish-line {
+        height: 18px;
+        font-size: 7px;
     }
 }

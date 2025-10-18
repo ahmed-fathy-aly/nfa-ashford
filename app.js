@@ -92,12 +92,20 @@ app.get('/article/:id', (req, res) => {
   }
   
   const isSPA = req.query.spa === 'true';
+  
+  // Use different template for 5K article
+  const template = article.id === 'ashford-5k-park-run' 
+    ? 'content/article-5k' 
+    : 'content/article';
+  
+  console.log(`Rendering article: ${article.id}, using template: ${template}, SPA: ${isSPA}`);
+  
   if (isSPA) {
     // Return only content for SPA
-    res.render('content/article', { article, layout: false });
+    res.render(template, { article, layout: false });
   } else {
     // Return full page with layout
-    res.render('content/article', { article });
+    res.render(template, { article });
   }
 });
 
